@@ -1,10 +1,185 @@
 /* ============================================================
-   NAVEEN RAGIPINDI — PORTFOLIO (ENHANCED)
-   script.js — Advanced Features
+   NAVEEN RAGIPINDI — PORTFOLIO (DYNAMIC DATA)
+   script.js — Data-driven & Advanced Features
    ============================================================ */
 
+let portfolioData = {};
+
+/* ── LOAD DATA FROM JSON ── */
+async function loadPortfolioData() {
+  try {
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    portfolioData = await response.json();
+    console.log('✅ Portfolio data loaded successfully');
+    
+    /* Initialize all components */
+    populateNavigation();
+    populateHero();
+    populateAbout();
+    populateExperience();
+    populateIntegrations();
+    populateCertifications();
+    
+  } catch (error) {
+    console.error('❌ Failed to load portfolio data:', error);
+  }
+}
+
+/* ── POPULATE NAVIGATION ── */
+function populateNavigation() {
+  if (!portfolioData.navigation) return;
+  
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  
+  navLinks.innerHTML = portfolioData.navigation
+    .map(link => `<li><a href="${link.href}">${link.label}</a></li>`)
+    .join('');
+  
+  /* Re-attach scroll event listeners */
+  attachScrollEffects();
+}
+
+/* ── POPULATE HERO SECTION ── */
+function populateHero() {
+  if (!portfolioData.hero) return;
+  
+  const hero = portfolioData.hero;
+  
+  const statusEl = document.querySelector('.hero-available');
+  if (statusEl) statusEl.textContent = hero.status;
+  
+  const nameEl = document.querySelector('.hero-name');
+  if (nameEl) nameEl.textContent = hero.name;
+  
+  const roleEl = document.querySelector('.hero-role');
+  if (roleEl) roleEl.textContent = hero.role;
+  
+  const descEl = document.querySelector('.hero-desc');
+  if (descEl) descEl.innerHTML = hero.description;
+  
+  /* Populate stats */
+  const statsContainer = document.querySelector('.hero-stats');
+  if (statsContainer && hero.stats) {
+    statsContainer.innerHTML = hero.stats
+      .map(stat => `
+        <div class="hero-stat">
+          <span class="stat-n">${stat.number}</span>
+          <span class="stat-l">${stat.label}</span>
+        </div>
+      `)
+      .join('');
+  }
+}
+
+/* ── POPULATE ABOUT SECTION ── */
+function populateAbout() {
+  if (!portfolioData.about) return;
+  
+  const about = portfolioData.about;
+  const aboutText = document.querySelector('.about-text');
+  
+  if (aboutText) {
+    aboutText.innerHTML = `
+      <p>${about.bio}</p>
+      <p>${about.bio2}</p>
+      <p>${about.bio3}</p>
+    `;
+  }
+  
+  /* Populate about cards */
+  const cardsContainer = document.querySelector('.about-cards');
+  if (cardsContainer && about.cards) {
+    cardsContainer.innerHTML = about.cards
+      .map(card => `
+        <div class="acard reveal">
+          <div class="acard-icon">${card.icon}</div>
+          <div>
+            <h4>${card.title}</h4>
+            <p>${card.description}</p>
+          </div>
+        </div>
+      `)
+      .join('');
+  }
+}
+
+/* ── POPULATE EXPERIENCE TIMELINE ── */
+function populateExperience() {
+  if (!portfolioData.experience) return;
+  
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+  
+  timeline.innerHTML = portfolioData.experience
+    .map((exp, idx) => `
+      <div class="tl-item reveal">
+        <div class="tl-line"></div>
+        <div class="tl-dot ${exp.current ? 'tl-dot-active' : ''}"></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div>
+              <div class="tl-role">${exp.role}</div>
+              <div class="tl-company">${exp.company}</div>
+            </div>
+            <div class="tl-badges">
+              ${exp.current ? '<span class="badge-current">● Current</span>' : ''}
+              <span class="badge-period">${exp.period}</span>
+            </div>
+          </div>
+          <ul class="tl-list">
+            ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    `)
+    .join('');
+}
+
+/* ── POPULATE INTEGRATIONS ── */
+function populateIntegrations() {
+  if (!portfolioData.integrations) return;
+  
+  const intGrid = document.querySelector('.int-grid');
+  if (!intGrid) return;
+  
+  intGrid.innerHTML = portfolioData.integrations
+    .map(integration => `
+      <div class="int-card reveal">
+        <div class="int-dot" style="background:${integration.color};"></div>
+        <h4>${integration.name}</h4>
+        <p>${integration.description}</p>
+      </div>
+    `)
+    .join('');
+}
+
+/* ── POPULATE CERTIFICATIONS ── */
+function populateCertifications() {
+  if (!portfolioData.certifications) return;
+  
+  const certGrid = document.querySelector('.cert-grid');
+  if (!certGrid) return;
+  
+  certGrid.innerHTML = portfolioData.certifications
+    .map(cert => `
+      <div class="cert-card reveal">
+        <div class="cert-icon">${cert.icon}</div>
+        <div class="cert-info">
+          <div class="cert-name">${cert.name}</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">${cert.issuer}</span> · Issued ${cert.issued}
+          </div>
+          ${cert.id ? `<div class="cert-id">ID: ${cert.id}</div>` : ''}
+        </div>
+      </div>
+    `)
+    .join('');
+}
+
 /* ── NAV: active link highlight + hamburger + scroll effect ── */
-(function () {
+function attachScrollEffects() {
   const navbar   = document.getElementById('navbar');
   const backTop  = document.getElementById('backTop');
   const toggle   = document.getElementById('navToggle');
@@ -51,7 +226,7 @@
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-})();
+}
 
 /* ── REVEAL ON SCROLL ── */
 (function () {
@@ -102,268 +277,47 @@
   io.observe(strip);
 })();
 
-/* ── ADVANCED NETSUITE SKILLS DATABASE ── */
-const netsuiteSkillsDatabase = {
-  coreModules: {
-    title: "Core NetSuite Modules",
-    description: "Complete expertise across all primary NetSuite modules",
-    skills: [
-      {
-        name: "Financial Management",
-        level: "Expert",
-        description: "GL, AP/AR, Bank Reconciliation, Multi-currency, Consolidation",
-        icon: "📊"
-      },
-      {
-        name: "Fixed Assets (FA)",
-        level: "Expert",
-        description: "Asset tracking, depreciation, impairment, disposal, revaluation, multi-location management",
-        icon: "🏢",
-        details: [
-          "Fixed Asset creation and management",
-          "Depreciation methods (straight-line, declining balance, units of production)",
-          "Asset disposal and retirement workflows",
-          "Impairment testing and revaluation",
-          "Multi-entity asset consolidation",
-          "Lease accounting (ASC 842 / IFRS 16)",
-          "Asset tagging and barcode integration",
-          "Depreciation schedule customization"
-        ]
-      },
-      {
-        name: "Procure-to-Pay (P2P)",
-        level: "Expert",
-        description: "Purchase requisitions, POs, vendor management, invoice matching, 3-way match",
-        icon: "🛒"
-      },
-      {
-        name: "Order-to-Cash (O2C)",
-        level: "Expert",
-        description: "Sales orders, fulfillment, billing, revenue recognition, customer management",
-        icon: "💰"
-      },
-      {
-        name: "Inventory Management",
-        level: "Expert",
-        description: "Stock movements, warehouse management, cycle counting, lot/serial tracking, ABC analysis",
-        icon: "📦"
-      }
-    ]
-  },
+/* ── POPULATE SKILLS FROM DATABASE ── */
+function populateSkillsContent() {
+  const skillsContainer = document.querySelector('.skills-cols');
+  if (!skillsContainer || !portfolioData.skills) return;
+
+  let html = '';
   
-  advancedModules: {
-    title: "Advanced Modules",
-    description: "Specialized expertise in complex NetSuite modules",
-    skills: [
-      {
-        name: "ARM - Accounts Receivable Management",
-        level: "Expert",
-        description: "Advanced collections, cash application, customer credit management, dunning",
-        icon: "💳",
-        details: [
-          "Aging analysis and reporting",
-          "Cash application rules and automation",
-          "Customer credit limits and hold management",
-          "Collections management workflows",
-          "Dunning management and escalation",
-          "Deduction management",
-          "Revenue recognition policies (ASC 606)",
-          "Customer segmentation for AR strategies",
-          "Disputed invoice tracking and resolution",
-          "Payment terms optimization"
-        ]
-      },
-      {
-        name: "R2R - Record-to-Report",
-        level: "Expert",
-        description: "Financial close procedures, consolidation, reporting, compliance, audit trails",
-        icon: "📈",
-        details: [
-          "Month-end & year-end close procedures",
-          "Multi-entity consolidation workflows",
-          "Intercompany reconciliation",
-          "Elimination entries automation",
-          "Trial balance and GL reconciliation",
-          "Financial statement generation",
-          "Statutory reporting requirements",
-          "Audit trail and compliance documentation",
-          "Variance analysis reporting",
-          "Management accounting dashboards"
-        ]
-      },
-      {
-        name: "Advanced Manufacturing",
-        level: "Proficient",
-        description: "Bill of Materials (BOM), work orders, production planning, manufacturing execution",
-        icon: "🏭",
-        details: [
-          "Bill of Materials (BOM) structure",
-          "Work order management and scheduling",
-          "Production planning and forecasting",
-          "Manufacturing execution tracking",
-          "Quality control processes",
-          "Resource planning (MRP)",
-          "Routing and work center setup",
-          "Backflushing and cost allocation",
-          "WIP management",
-          "Manufacturing KPIs and dashboards"
-        ]
-      },
-      {
-        name: "Revenue Management",
-        level: "Expert",
-        description: "Revenue recognition, revenue schedules, milestone tracking, SaaS metrics",
-        icon: "💵",
-        details: [
-          "ASC 606 revenue recognition",
-          "Performance obligation setup",
-          "Contract-based revenue",
-          "Milestone-based revenue",
-          "Subscription revenue models",
-          "Revenue schedules and reversals",
-          "Deferred revenue tracking",
-          "Revenue recognition reports",
-          "Contract modifications handling",
-          "Revenue integrity and reconciliation"
-        ]
-      }
-    ]
-  },
-
-  specializations: {
-    title: "Specialized Skills",
-    description: "Domain expertise in specific areas and integrations",
-    skills: [
-      {
-        name: "Tax Management",
-        level: "Expert",
-        description: "GST, TDS, VAT, Avalara integration, multi-tax jurisdictions, compliance",
-        icon: "📋",
-        details: [
-          "Goods and Services Tax (GST) - India",
-          "Tax Deducted at Source (TDS) - India",
-          "Value Added Tax (VAT) - Europe",
-          "Sales Tax - North America",
-          "Avalara integration & configuration",
-          "Tax code setup and maintenance",
-          "Tax-exempt transactions",
-          "Tax audit reports",
-          "Multi-jurisdiction tax rules"
-        ]
-      },
-      {
-        name: "Reporting & Analytics",
-        level: "Expert",
-        description: "Saved searches, SuiteAnalytics, dashboards, KPIs, custom reports",
-        icon: "📊",
-        details: [
-          "Saved searches with complex criteria",
-          "SuiteAnalytics workbooks",
-          "Custom dashboard design",
-          "KPI cards and gauges",
-          "Financial dashboards",
-          "Operational KPIs",
-          "Report templates (PDF/HTML)",
-          "Automated report scheduling",
-          "Executive dashboards",
-          "Real-time data visualization"
-        ]
-      },
-      {
-        name: "Workflow Automation",
-        level: "Expert",
-        description: "SuiteFlow, approval workflows, user event scripts, automation best practices",
-        icon: "⚙️",
-        details: [
-          "SuiteFlow workflow builder",
-          "Approval workflows",
-          "Conditional logic and branching",
-          "User Event Scripts",
-          "Client Scripts",
-          "Scheduled Scripts",
-          "Script scheduling",
-          "Email automation",
-          "Workflow monitoring & debugging",
-          "Performance optimization"
-        ]
-      },
-      {
-        name: "Integration Architecture",
-        level: "Expert",
-        description: "Salesforce, Shopify, HubSpot, Marketo, Concur, Zapier, middleware",
-        icon: "🔗",
-        details: [
-          "Salesforce CRM sync",
-          "Shopify eCommerce integration",
-          "HubSpot CRM integration",
-          "Marketo marketing automation",
-          "Concur expense management",
-          "Zapier workflow automation",
-          "REST API implementation",
-          "SOAP Web Services",
-          "Middleware solutions",
-          "Data mapping and transformation"
-        ]
-      }
-    ]
-  },
-
-  technicalSkills: {
-    title: "Technical & Development",
-    description: "Scripting and development capabilities",
-    skills: [
-      {
-        name: "SuiteScript 2.x",
-        level: "Proficient",
-        description: "User Event, Client Scripts, Scheduled Scripts, RESTlets, module development",
-        icon: "💻",
-        details: [
-          "User Event Scripts (beforeSubmit, afterSubmit, beforeLoad)",
-          "Client Scripts (pageInit, fieldChanged, saveRecord)",
-          "Scheduled Scripts for batch operations",
-          "RESTlets for API endpoints",
-          "Module definitions and dependencies",
-          "Error handling and logging",
-          "Performance optimization",
-          "Debugging techniques"
-        ]
-      },
-      {
-        name: "Data Management",
-        level: "Expert",
-        description: "CSV import/export, data migration, data validation, cleansing strategies",
-        icon: "🗄️",
-        details: [
-          "CSV data import procedures",
-          "Bulk data export workflows",
-          "Data validation rules",
-          "Duplicate detection & merging",
-          "Data cleansing strategies",
-          "Historical data migration",
-          "Data mapping documentation",
-          "Reconciliation procedures"
-        ]
-      },
-      {
-        name: "System Configuration",
-        level: "Expert",
-        description: "Custom records, custom fields, custom forms, role management, security",
-        icon: "⚙️",
-        details: [
-          "Custom record types creation",
-          "Custom field definitions",
-          "Custom form design",
-          "Role-based security",
-          "Permission set management",
-          "Record access restrictions",
-          "Department hierarchy setup",
-          "Field-level security",
-          "Audit trail configuration"
-        ]
-      }
-    ]
-  }
-};
+  Object.values(portfolioData.skills).forEach(category => {
+    html += `
+      <div class="skill-col reveal" style="grid-column: 1 / -1;">
+        <h3 class="skill-col-title" style="font-size: 16px; margin-bottom: 24px;">
+          ${category.icon || '🎯'} ${category.title}
+        </h3>
+        <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">${category.description}</p>
+        <div class="skill-list">
+    `;
+    
+    category.skills.forEach(skill => {
+      const hasDetails = skill.details && skill.details.length > 0;
+      const levelClass = skill.level === 'Expert' ? 'level-high' : 
+                         skill.level === 'Proficient' ? 'level-mid' : 'level-low';
+      
+      html += `
+        <div class="skill-row" ${hasDetails ? `onclick="showSkillDetails('${skill.name}', ${JSON.stringify(skill.details).replace(/"/g, '&quot;')})` : ''} 
+             style="${hasDetails ? 'cursor: pointer; transition: all 0.2s ease;' : ''}">
+          <span>${skill.icon} ${skill.name}</span>
+          <span class="skill-level ${levelClass}">${skill.level}</span>
+        </div>
+        ${skill.description ? `<div style="font-size: 12px; color: var(--muted); padding: 6px 0 12px 0; border-bottom: 1px solid rgba(74,108,247,0.1);">${skill.description}</div>` : ''}
+      `;
+    });
+    
+    html += `
+        </div>
+      </div>
+    `;
+  });
+  
+  skillsContainer.innerHTML = html;
+  initializeSkillsInteractivity();
+}
 
 /* ── SKILLS MODAL/EXPANSION FUNCTIONALITY ── */
 function initializeSkillsInteractivity() {
@@ -428,50 +382,11 @@ function showSkillDetails(skillName, details) {
   }, 100);
 }
 
-/* ── POPULATE SKILLS FROM DATABASE ── */
-function populateSkillsContent() {
-  const skillsContainer = document.querySelector('.skills-cols');
-  if (!skillsContainer) return;
-
-  let html = '';
-  
-  Object.values(netsuiteSkillsDatabase).forEach(category => {
-    html += `
-      <div class="skill-col reveal" style="grid-column: 1 / -1;">
-        <h3 class="skill-col-title" style="font-size: 16px; margin-bottom: 24px;">
-          ${category.icon || '🎯'} ${category.title}
-        </h3>
-        <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">${category.description}</p>
-        <div class="skill-list">
-    `;
-    
-    category.skills.forEach(skill => {
-      const hasDetails = skill.details && skill.details.length > 0;
-      const levelClass = skill.level === 'Expert' ? 'level-high' : 
-                        skill.level === 'Proficient' ? 'level-mid' : 'level-low';
-      
-      html += `
-        <div class="skill-row" ${hasDetails ? `onclick="showSkillDetails('${skill.name}', ${JSON.stringify(skill.details).replace(/"/g, '&quot;')})` : ''} 
-             style="${hasDetails ? 'cursor: pointer; transition: all 0.2s ease;' : ''}">
-          <span>${skill.icon} ${skill.name}</span>
-          <span class="skill-level ${levelClass}">${skill.level}</span>
-        </div>
-        ${skill.description ? `<div style="font-size: 12px; color: var(--muted); padding: 6px 0 12px 0; border-bottom: 1px solid rgba(74,108,247,0.1);">${skill.description}</div>` : ''}
-      `;
-    });
-    
-    html += `
-        </div>
-      </div>
-    `;
-  });
-  
-  skillsContainer.innerHTML = html;
-  initializeSkillsInteractivity();
-}
-
 /* ── INITIALIZE ON DOM READY ── */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  /* Load data first */
+  await loadPortfolioData();
+  
   /* Populate skills when section comes into view */
   const skillsSection = document.getElementById('skills');
   if (skillsSection) {
@@ -504,6 +419,9 @@ function handleFormSubmit(e) {
     return;
   }
 
+  /* Get email from data */
+  const contactEmail = portfolioData.contact?.email || 'naveen.netsuite01@gmail.com';
+
   /* Build mailto */
   const subject = encodeURIComponent('NetSuite Project Brief — ' + service);
   const body = encodeURIComponent(
@@ -515,7 +433,7 @@ function handleFormSubmit(e) {
   );
 
   window.location.href =
-    'mailto:naveen.netsuite01@gmail.com?subject=' + subject + '&body=' + body;
+    'mailto:' + contactEmail + '?subject=' + subject + '&body=' + body;
 
   /* Show success state */
   setTimeout(() => {
