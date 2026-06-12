@@ -1,9 +1,4 @@
-/* ============================================================
-   NAVEEN RAGIPINDI — PORTFOLIO
-   script.js
-   ============================================================ */
-
-/* ── NAV: active link highlight + hamburger ── */
+/* ── NAV: active link highlight + hamburger + scroll progress ── */
 (function () {
   const navbar   = document.getElementById('navbar');
   const backTop  = document.getElementById('backTop');
@@ -11,15 +6,19 @@
   const mobileMenu = document.getElementById('mobileMenu');
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = document.querySelectorAll('section[id], div[id]');
+  const progressCircle = backTop.querySelector('.progress');
+  const circumference = 144; // 2 * π * r (r=23)
 
-  /* scroll effects */
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? y / docHeight : 0;
 
-    /* back to top visibility */
     backTop.classList.toggle('show', y > 400);
 
-    /* active nav link */
+    const offset = circumference - (scrollPercent * circumference);
+    progressCircle.style.strokeDashoffset = offset;
+
     let current = '';
     sections.forEach(sec => {
       if (y >= sec.offsetTop - 100) current = sec.id;
@@ -29,42 +28,22 @@
     });
   }, { passive: true });
 
-  /* hamburger */
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('open');
     mobileMenu.classList.toggle('open');
   });
 
-  /* close mobile menu on link click */
   document.querySelectorAll('.mob-link').forEach(link => {
     link.addEventListener('click', () => {
       toggle.classList.remove('open');
       mobileMenu.classList.remove('open');
     });
   });
+
+  backTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
-
-/* ── REVEAL ON SCROLL ── */
-(function () {
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        /* stagger siblings */
-        const siblings = Array.from(e.target.parentElement.querySelectorAll('.reveal'));
-        const idx = siblings.indexOf(e.target);
-        e.target.style.transitionDelay = (idx * 80) + 'ms';
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  reveals.forEach(el => io.observe(el));
-})();
-
-/* ── COUNTER ANIMATION ── */
-(function () {
   const nums = document.querySelectorAll('.cs-num[data-target]');
   let ran = false;
 
