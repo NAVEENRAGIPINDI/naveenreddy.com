@@ -1,5 +1,5 @@
 /* ============================================================
-   NAVEEN RAGIPINDI — PORTFOLIO (LIGHT THEME)
+   NAVEEN RAGIPINDI — PORTFOLIO (NAVY & GOLD THEME)
    style.css
    ============================================================ */
 
@@ -7,20 +7,20 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #06120f;
-  --bg2:      #0b1f1a;
-  --bg3:      #0e2620;
-  --bg4:      #123129;
-  --border:   rgba(16,185,129,0.12);
-  --border2:  rgba(16,185,129,0.22);
-  --text:     #eaf7f1;
-  --muted:    #8aa39a;
-  --muted2:   #5c7a70;
-  --accent:   #10b981;
-  --accent2:  #06b6d4;
-  --teal:     #0d9488;
-  --amber:    #d97e0d;
-  --green:    #16a34a;
+  --bg:       #0a0e1a;
+  --bg2:      #11172b;
+  --bg3:      #151c35;
+  --bg4:      #1a2240;
+  --border:   rgba(212,175,55,0.12);
+  --border2:  rgba(212,175,55,0.22);
+  --text:     #f5f3ec;
+  --muted:    #9aa3b8;
+  --muted2:   #5c6680;
+  --accent:   #d4af37;
+  --accent2:  #c9a14a;
+  --teal:     #b8924f;
+  --amber:    #d4af37;
+  --green:    #4ade80;
   --font:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --nav-h:    64px;
   --radius:   12px;
@@ -28,8 +28,8 @@
   --radius-xs: 6px;
   --transition: 0.2s ease;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 20px rgba(16,185,129,0.08);
-  --shadow-lg: 0 12px 36px rgba(16,185,129,0.12);
+  --shadow-md: 0 4px 20px rgba(212,175,55,0.08);
+  --shadow-lg: 0 12px 36px rgba(212,175,55,0.12);
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -74,7 +74,7 @@ button { cursor: pointer; font-family: var(--font); }
    ============================================================ */
 .nav-wrap {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(6,18,15,0.85);
+  background: rgba(10,14,26,0.85);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   transition: background var(--transition);
@@ -90,7 +90,7 @@ button { cursor: pointer; font-family: var(--font); }
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; color: #fff;
+  font-size: 14px; font-weight: 700; color: #0a0e1a;
   flex-shrink: 0;
   box-shadow: var(--shadow-sm);
 }
@@ -116,7 +116,7 @@ button { cursor: pointer; font-family: var(--font); }
   font-size: 13.5px; font-weight: 500;
   padding: 9px 20px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
+  color: #0a0e1a;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -192,7 +192,7 @@ button { cursor: pointer; font-family: var(--font); }
   content: '';
   position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 900px; height: 600px;
-  background: radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.18) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.18) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -200,8 +200,8 @@ button { cursor: pointer; font-family: var(--font); }
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 11.5px; font-weight: 500; letter-spacing: 0.05em;
   color: var(--teal); text-transform: uppercase;
-  background: rgba(15,174,138,0.08);
-  border: 1px solid rgba(15,174,138,0.25);
+  background: rgba(184,146,79,0.08);
+  border: 1px solid rgba(184,146,79,0.25);
   border-radius: 40px; padding: 5px 16px; margin-bottom: 28px;
 }
 .hero-available::before { content: '●'; font-size: 7px; }
@@ -210,7 +210,7 @@ button { cursor: pointer; font-family: var(--font); }
   font-size: clamp(40px, 6.5vw, 80px);
   font-weight: 700; letter-spacing: -2.5px; line-height: 1.02;
   margin-bottom: 14px;
-  background: linear-gradient(160deg, #eaf7f1 30%, #4f7a6c 100%);
+  background: linear-gradient(160deg, #f5f3ec 30%, #5c6680 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -268,7 +268,7 @@ button { cursor: pointer; font-family: var(--font); }
   width: 34px; height: 34px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+  font-size: 12px; font-weight: 700; color: #0a0e1a; flex-shrink: 0;
 }
 
 /* TICKER */
@@ -291,7 +291,7 @@ button { cursor: pointer; font-family: var(--font); }
 
 .tag-ticker-wrap {
   width: 100%; overflow: hidden;
-  background: rgba(16,185,129,0.04);
+  background: rgba(212,175,55,0.04);
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
@@ -385,8 +385,8 @@ button { cursor: pointer; font-family: var(--font); }
 .acard:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .acard-icon {
   width: 38px; height: 38px;
-  background: rgba(16,185,129,0.08);
-  border: 1px solid rgba(16,185,129,0.15);
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.15);
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 17px; flex-shrink: 0;
@@ -426,8 +426,8 @@ button { cursor: pointer; font-family: var(--font); }
   transition: all var(--transition);
 }
 .pill:hover { color: var(--text); border-color: var(--accent); }
-.pill-accent { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); color: var(--accent); }
-.pill-teal   { background: rgba(15,174,138,0.08); border-color: rgba(15,174,138,0.3); color: var(--teal); }
+.pill-accent { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.3); color: var(--accent); }
+.pill-teal   { background: rgba(184,146,79,0.08); border-color: rgba(184,146,79,0.3); color: var(--teal); }
 
 /* ============================================================
    SKILLS
@@ -461,8 +461,8 @@ button { cursor: pointer; font-family: var(--font); }
   font-size: 11px; font-weight: 500; padding: 3px 10px;
   border-radius: 40px; white-space: nowrap;
 }
-.level-high { background: rgba(15,174,138,0.08); color: var(--teal); border: 1px solid rgba(15,174,138,0.3); }
-.level-mid  { background: rgba(16,185,129,0.08); color: var(--accent); border: 1px solid rgba(16,185,129,0.3); }
+.level-high { background: rgba(184,146,79,0.08); color: var(--teal); border: 1px solid rgba(184,146,79,0.3); }
+.level-mid  { background: rgba(212,175,55,0.08); color: var(--accent); border: 1px solid rgba(212,175,55,0.3); }
 .level-low  { background: var(--bg4); color: var(--muted); border: 1px solid var(--border2); }
 
 /* ============================================================
@@ -493,7 +493,7 @@ button { cursor: pointer; font-family: var(--font); }
 .tl-dot-active {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.12);
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
 }
 
 .tl-card {
@@ -517,8 +517,8 @@ button { cursor: pointer; font-family: var(--font); }
 .tl-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .badge-current {
   font-size: 11px; font-weight: 500;
-  color: var(--teal); background: rgba(15,174,138,0.08);
-  border: 1px solid rgba(15,174,138,0.3);
+  color: var(--teal); background: rgba(184,146,79,0.08);
+  border: 1px solid rgba(184,146,79,0.3);
   border-radius: 40px; padding: 4px 11px; letter-spacing: 0.04em;
 }
 .badge-period {
@@ -583,8 +583,8 @@ button { cursor: pointer; font-family: var(--font); }
 .cert-card:hover { border-color: var(--amber); box-shadow: var(--shadow-md); }
 .cert-icon {
   width: 44px; height: 44px;
-  background: rgba(217,126,13,0.08);
-  border: 1px solid rgba(217,126,13,0.25);
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.25);
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 19px; flex-shrink: 0;
@@ -670,7 +670,7 @@ button { cursor: pointer; font-family: var(--font); }
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(16,185,129,0.12);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--muted2); }
