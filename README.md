@@ -1,1 +1,0 @@
-# naveenreddy.com
