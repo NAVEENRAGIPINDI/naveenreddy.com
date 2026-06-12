@@ -7,15 +7,15 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #f0faf6;
-  --bg2:      #ffffff;
-  --bg3:      #ffffff;
-  --bg4:      #e3f5ee;
-  --border:   rgba(13,148,136,0.10);
-  --border2:  rgba(13,148,136,0.18);
-  --text:     #1a1d29;
-  --muted:    #6b7280;
-  --muted2:   #9aa1b1;
+  --bg:       #06120f;
+  --bg2:      #0b1f1a;
+  --bg3:      #0e2620;
+  --bg4:      #123129;
+  --border:   rgba(16,185,129,0.12);
+  --border2:  rgba(16,185,129,0.22);
+  --text:     #eaf7f1;
+  --muted:    #8aa39a;
+  --muted2:   #5c7a70;
   --accent:   #10b981;
   --accent2:  #06b6d4;
   --teal:     #0d9488;
@@ -27,9 +27,9 @@
   --radius-sm: 8px;
   --radius-xs: 6px;
   --transition: 0.2s ease;
-  --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
-  --shadow-md: 0 4px 16px rgba(15,23,42,0.06);
-  --shadow-lg: 0 12px 32px rgba(15,23,42,0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(16,185,129,0.08);
+  --shadow-lg: 0 12px 36px rgba(16,185,129,0.12);
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -74,7 +74,7 @@ button { cursor: pointer; font-family: var(--font); }
    ============================================================ */
 .nav-wrap {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(240,250,246,0.85);
+  background: rgba(6,18,15,0.85);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   transition: background var(--transition);
@@ -192,7 +192,7 @@ button { cursor: pointer; font-family: var(--font); }
   content: '';
   position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 900px; height: 600px;
-  background: radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.14) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.18) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -210,7 +210,7 @@ button { cursor: pointer; font-family: var(--font); }
   font-size: clamp(40px, 6.5vw, 80px);
   font-weight: 700; letter-spacing: -2.5px; line-height: 1.02;
   margin-bottom: 14px;
-  background: linear-gradient(160deg, #1a1d29 30%, #5b6488 100%);
+  background: linear-gradient(160deg, #eaf7f1 30%, #4f7a6c 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
