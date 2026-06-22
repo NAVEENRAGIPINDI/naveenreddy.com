@@ -1,41 +1,53 @@
 /* ============================================================
    NAVEEN RAGIPINDI — PORTFOLIO
-   script.js
+   script.js  — Violet & Electric Blue Theme
    ============================================================ */
 
-/* ── NAV: active link highlight + hamburger ── */
-(function () {
-  const navbar   = document.getElementById('navbar');
-  const backTop  = document.getElementById('backTop');
-  const toggle   = document.getElementById('navToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const sections = document.querySelectorAll('section[id], div[id]');
+/* ── INJECT SCROLL PROGRESS BAR ── */
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress-bar';
+document.body.prepend(progressBar);
 
-  /* scroll effects */
+/* ── NAV: scroll state + active link + hamburger ── */
+(function () {
+  const navbar     = document.getElementById('navbar');
+  const backTop    = document.getElementById('backTop');
+  const toggle     = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const navLinks   = document.querySelectorAll('.nav-links a');
+  const sections   = document.querySelectorAll('section[id], div[id]');
+
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
 
-    /* back to top visibility */
+    /* ── Scroll progress bar ── */
+    const pct = docH > 0 ? (y / docH) * 100 : 0;
+    progressBar.style.width = pct + '%';
+
+    /* ── Back to top ── */
     backTop.classList.toggle('show', y > 400);
 
-    /* active nav link */
+    /* ── Neon glass border on scroll ── */
+    navbar.classList.toggle('nav-scrolled', y > 60);
+
+    /* ── Active nav link (pill highlight) ── */
     let current = '';
     sections.forEach(sec => {
-      if (y >= sec.offsetTop - 100) current = sec.id;
+      if (y >= sec.offsetTop - 110) current = sec.id;
     });
     navLinks.forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
+
   }, { passive: true });
 
-  /* hamburger */
+  /* ── Hamburger ── */
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('open');
     mobileMenu.classList.toggle('open');
   });
 
-  /* close mobile menu on link click */
   document.querySelectorAll('.mob-link').forEach(link => {
     link.addEventListener('click', () => {
       toggle.classList.remove('open');
@@ -48,9 +60,8 @@
 (function () {
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
+    entries.forEach((e) => {
       if (e.isIntersecting) {
-        /* stagger siblings */
         const siblings = Array.from(e.target.parentElement.querySelectorAll('.reveal'));
         const idx = siblings.indexOf(e.target);
         e.target.style.transitionDelay = (idx * 80) + 'ms';
@@ -65,9 +76,8 @@
 
 /* ── COUNTER ANIMATION ── */
 (function () {
-  const nums = document.querySelectorAll('.cs-num[data-target]');
+  const nums  = document.querySelectorAll('.cs-num[data-target]');
   let ran = false;
-
   const strip = document.querySelector('.counter-strip');
   if (!strip) return;
 
@@ -76,12 +86,12 @@
       ran = true;
       nums.forEach(el => {
         const target = +el.dataset.target;
-        const duration = 1200;
+        const duration = 1400;
         const start = performance.now();
         function step(now) {
           const elapsed = now - start;
           const progress = Math.min(elapsed / duration, 1);
-          const ease = 1 - Math.pow(1 - progress, 3); /* ease-out-cubic */
+          const ease = 1 - Math.pow(1 - progress, 3);
           el.textContent = Math.round(ease * target);
           if (progress < 1) requestAnimationFrame(step);
         }
@@ -103,7 +113,6 @@ function handleFormSubmit(e) {
   const service = document.getElementById('fservice').value;
   const msg     = document.getElementById('fmsg').value.trim();
 
-  /* Build mailto */
   const subject = encodeURIComponent('NetSuite Project Brief — ' + service);
   const body = encodeURIComponent(
     'Name: ' + name + '\n' +
@@ -116,7 +125,6 @@ function handleFormSubmit(e) {
   window.location.href =
     'mailto:naveen.netsuite01@gmail.com?subject=' + subject + '&body=' + body;
 
-  /* Show success state */
   document.getElementById('contactForm').classList.add('hidden');
   document.getElementById('formSuccess').classList.add('show');
 }
